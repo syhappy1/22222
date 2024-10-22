@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>抽奖</title>
+    <style>
+        div{
+            display: flex;
+            justify-content: center; 
+            align-items: center;
+        }
+        td{    
+            width: 100px;
+            height: 120px;
+            border: 1px solid #000;
+            background-color: aquamarine;
+        }
+        .hit, .miss {
+            background-color: white;
+        }
+        .hit::before {
+           content: "😃";
+           font-size: 24px;
+        }
+        .miss::before {
+           content: "😂😂😂😂" ;
+        }
+    </style>
+     <script>
+        window.onload = function() {
+          const prize = Math.floor(Math.random()*8) + 1;
+          console.log(prize);
+          document.querySelectorAll('td')
+            .forEach(ele => ele.addEventListener('click', handler, false));
+    
+          let times = 1;
+          function handler(event) {
+            const tag = event.target;
+            let p = document.createElement("p");
+            if (tag.id == `a${prize}`) {
+              tag.className = 'hit';
+              const tip = document.createTextNode(`第${times}次点击：恭喜中奖😃`);
+              p.appendChild(tip);
+              document.body.appendChild(p);
+              document.querySelectorAll('td').forEach(t => t.removeEventListener('click', handler, false));
+            } else {
+              tag.className = 'miss';
+              const tip = document.createTextNode(`第${times}次点击：未中奖☹️`);
+              p.appendChild(tip);
+              document.body.appendChild(p);
+              tag.removeEventListener('click', handler, false);
+            }
+            times++;
+          }
+    
+        }
+      </script>
+</head>
+<body >
+    <p style="text-align: center; color: brown;font-size: 50px;">幸运抽奖</p>
+    <div>   
+    <table>
+        <tr>
+            <td id="a1"></td>
+            <td id="a2"></td>
+            <td id="a3"></td>
+        </tr>
+        <tr>
+            <td id="a4"></td>
+            <td id="a5"></td>
+            <td id="a6"></td>
+        </tr>
+        <tr>
+            <td id="a7"></td>
+            <td id="a8"></td>
+            <td id="a9"></td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>
